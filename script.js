@@ -72,20 +72,60 @@ T.links.forEach(link => {
   $("links").appendChild(li);
 
  
+
+$("links").innerHTML = "";
+T.links.forEach(link => {
+  const li = document.createElement("li");
+
+  const a = document.createElement("a");
+  a.className = "ticket stub";
+  a.href = link.url;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+
+  const spanLabel = document.createElement("span");
+  spanLabel.className = "a";
+  spanLabel.textContent = link.label;
+
+  const spanHandle = document.createElement("span");
+  spanHandle.className = "b";
+  spanHandle.textContent = link.handle;
+
+  a.append(spanLabel, spanHandle);
+  li.appendChild(a);
+  $("links").appendChild(li);
+});
+
 async function updateViewCount() {
+  const countElement = document.getElementById('visits-count');
+  const base = 'https://api.counterapi.dev/v1/twa-entabladistas/views/';
+
+  // Only count once per visit (per browser tab session)
+  let alreadyCounted = false;
   try {
-    
-    const response = await fetch('https://api.counterapi.dev/v1/twaentabladistas/views/up');
+    alreadyCounted = sessionStorage.getItem('twa-counted') === '1';
+  } catch (e) {}
+
+  try {
+    // First time this visit: add +1. Refreshes: just read the number.
+    const url = alreadyCounted ? base : base + 'up';
+    const response = await fetch(url, { cache: 'no-store' });
     const data = await response.json();
-    
-   
-    document.getElementById('visits-count').innerText = data.count;
+
+    if (!alreadyCounted) {
+      try { sessionStorage.setItem('twa-counted', '1'); } catch (e) {}
+    }
+
+    if (countElement) {
+      countElement.innerText = data.count || '1';
+    }
   } catch (error) {
     console.log('Error loading counter:', error);
-    document.getElementById('visits-count').innerText = '1';
+    if (countElement) {
+      countElement.innerText = '1';
+    }
   }
 }
-
 
 updateViewCount();
 
