@@ -1,0 +1,337 @@
+:root {
+  --stage: #0c0407;
+  --velvet: #4a0c17;
+  --velvet-hi: #8a1830;
+  --gold: #e0ad4f;
+  --gold-glow: #ffd98a;
+  --emerald: #10b981;
+  --emerald-glow: rgba(16, 185, 129, 0.25);
+  --ivory: #f4e8d0;
+  --ink: #1f0b10;
+  --muted: #c9b99a;
+  box-sizing: border-box;
+  color-scheme: dark;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+html {
+  min-height: 100%;
+  background: var(--stage);
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--stage);
+  color: var(--ivory);
+  font: 400 16px/1.5 "Jost", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+
+.beam {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(180deg, rgba(255, 217, 138, 0.25), rgba(16, 185, 129, 0.08) 60%, transparent);
+  clip-path: polygon(35% 0, 65% 0, 98% 100%, 2% 100%);
+  filter: blur(22px);
+}
+
+.pool {
+  position: fixed;
+  left: 50%;
+  bottom: -10vh;
+  width: 130vw;
+  height: 45vh;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 217, 138, 0.15), rgba(16, 185, 129, 0.05) 45%, transparent 70%);
+}
+
+
+.drape {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 20;
+  pointer-events: none;
+  background: repeating-linear-gradient(90deg, #3a0911 0 18px, var(--velvet-hi) 34px, #3a0911 52px);
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8);
+  animation: gather 2.2s cubic-bezier(0.7, 0, 0.25, 1) 0.5s forwards;
+}
+
+.drape.l {
+  left: 0;
+  transform-origin: left;
+  border-right: 2px solid rgba(224, 173, 79, 0.4);
+}
+
+.drape.r {
+  right: 0;
+  transform-origin: right;
+  border-left: 2px solid rgba(224, 173, 79, 0.4);
+}
+
+@keyframes gather {
+  to {
+    transform: scaleX(0.09);
+  }
+}
+
+.valance {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(48px + env(safe-area-inset-top, 0px));
+  z-index: 30;
+  pointer-events: none;
+  background: repeating-linear-gradient(90deg, #3a0911 0 22px, var(--velvet-hi) 38px, #3a0911 60px);
+  border-bottom: 3px solid var(--gold);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+}
+
+
+main {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 84px clamp(24px, 7vw, 36px) 56px;
+  text-align: center;
+}
+
+.bulbs {
+  height: 12px;
+  margin: 0 auto 20px;
+  max-width: 280px;
+  background: radial-gradient(circle, #ffe199 0 3px, transparent 4px) 0 50% / 22px 12px repeat-x;
+  filter: drop-shadow(0 0 6px rgba(224, 173, 79, 0.9));
+}
+
+
+.logo-badge {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(15, 5, 8, 0.75); /* Dark background para mag-blend */
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 25px rgba(224, 173, 79, 0.25), inset 0 0 15px rgba(0, 0, 0, 0.6);
+  overflow: hidden; /* Para mag-crop kung sakaling lumagpas */
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.logo-badge:hover {
+  transform: scale(1.04);
+  border-color: var(--gold-glow);
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Binabalot nang maayos ang bilog */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+/* --- Typography --- */
+h1 {
+  font: 700 clamp(32px, 9vw, 42px) / 1.05 "Bodoni Moda", serif;
+  margin: 0 0 4px;
+  color: var(--ivory);
+  letter-spacing: 2px;
+  text-shadow: 0 0 24px rgba(255, 217, 138, 0.3);
+}
+
+.sub-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.tag {
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-style: italic;
+  font-size: 15px;
+}
+
+
+.announcement-card {
+  position: relative;
+  background: linear-gradient(145deg, rgba(244, 232, 208, 0.96), rgba(235, 220, 190, 0.92));
+  color: var(--ink);
+  padding: 22px 24px;
+  border-radius: 12px;
+  text-align: left;
+  margin-bottom: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(224, 173, 79, 0.4);
+}
+
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ink);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--emerald);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--emerald);
+}
+
+.announcement-card .category {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #7a2233;
+  margin-bottom: 4px;
+}
+
+.announcement-card .title {
+  font: italic 600 24px / 1.2 "Bodoni Moda", serif;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+
+.announcement-card .description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #3d1c23;
+  margin: 0 0 16px;
+}
+
+.announcement-card .meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px dashed rgba(42, 16, 21, 0.3);
+  padding-top: 12px;
+}
+
+.announcement-card .date {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b3a40;
+}
+
+.announcement-card .action-btn {
+  display: inline-block;
+  background: var(--velvet);
+  color: var(--ivory);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.announcement-card .action-btn:hover {
+  background: var(--velvet-hi);
+  transform: translateY(-1px);
+}
+
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.ticket {
+  display: block;
+  position: relative;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--ivory);
+  -webkit-mask: radial-gradient(circle 9px at 0 50%, #0000 97%, #000) 0 0 / 51% 100% no-repeat,
+                radial-gradient(circle 9px at 100% 50%, #0000 97%, #000) 100% 0 / 51% 100% no-repeat;
+  mask: radial-gradient(circle 9px at 0 50%, #0000 97%, #000) 0 0 / 51% 100% no-repeat,
+        radial-gradient(circle 9px at 100% 50%, #0000 97%, #000) 100% 0 / 51% 100% no-repeat;
+  border-radius: 4px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+a.ticket:hover {
+  transform: translateY(-2px) rotate(-0.5deg);
+  background: #ffffff;
+}
+
+a.ticket:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.stub {
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+
+.stub .a {
+  flex: 1;
+  padding: 14px 16px 14px 24px;
+  font: italic 600 18px / 1.2 "Bodoni Moda", serif;
+  color: var(--ink);
+}
+
+.stub .b {
+  padding: 14px 22px 14px 16px;
+  border-left: 2px dashed rgba(42, 16, 21, 0.35);
+  display: grid;
+  place-items: center;
+  font-weight: 500;
+  font-size: 13px;
+  color: #6b3a40;
+}
+
+footer {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drape {
+    animation: none;
+    transform: scaleX(0.09);
+  }
+  .ticket {
+    transition: none;
+  }
+}   
