@@ -70,4 +70,23 @@ T.links.forEach(link => {
   a.append(spanLabel, spanHandle);
   li.appendChild(a);
   $("links").appendChild(li);
+
+ 
+async function updateViewCount() {
+  try {
+    
+    const response = await fetch('https://api.counterapi.dev/v1/twaentabladistas/views/up');
+    const data = await response.json();
+    
+   
+    document.getElementById('visits-count').innerText = data.count;
+  } catch (error) {
+    console.log('Error loading counter:', error);
+    document.getElementById('visits-count').innerText = '1';
+  }
+}
+
+
+updateViewCount();
+
 });
